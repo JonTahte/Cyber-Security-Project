@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% load humanize %}
+<html>
+<body>
+{% if not user.is_authenticated %}
+<a href="/login"> Login </a> | <a href="/register"> register </a>
+<hr>
+{% endif %}
+  <h1>Discussion forum</h1>
+{% if user.is_authenticated %}
+    <p><b>Username</b>: {{user.username}}</p>
+
+    <form action="logout/" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="Logout"/>
+    </form>
+{% endif %}
+  <h2>Comments</h2>
+  {% if comments %}
+        <ul style="list-style-type: none;">
+		{% for c in comments %}
+
+		<li style="margin-bottom: 18px;">
+		<div style="text-decoration: underline;"><a href="/profile/{{c.owner_id}}">{{c.owner}}</a> <small>({{c.pub_time|naturaltime}})</small>:</div>
+          <div style="margin-top: 3px;">{{c.comment|linebreaksbr}}</div>
+            {% if c.owner == user %}
+              <form action="delete/" method="POST" style="margin-top: 5px;">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{c.id}}" />
+                <input type="submit" value="Delete"/>
+              </form>
+            {% endif %}
+		</li>
+
+		{% endfor %}
+      </ul>
+  {% else %}
+    <b>No comments</b>
+    <br>
+  {% endif %}
+  <hr>
+{% if user.is_authenticated %}
+    <form action="add/" method="POST">
+      {% csrf_token %}
+      <textarea name="comment" style="resize: none; width: 250px; height: 70px"></textarea><br/>
+      <input type="submit" value="Comment"/>
+    </form>
+{% else %}
+<p>Log in to comment</p>
+{% endif %}
+</body>
+</html>

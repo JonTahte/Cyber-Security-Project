@@ -1,0 +1,25 @@
+<a href="/"> Home </a> | <a href="/login"> Login </a>
+<hr>
+<h2>Register</h2>
+{% if messages %}
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+{% endif %}
+  <form action="/create_account/" method="post">
+    {% csrf_token %}
+  <p>
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" />
+  </p>
+  <p>
+    <label for="password1">Password:</label>
+    <input type="password" name="password1" id="password1" />
+  </p>
+  <p>
+    <label for="password2">Confirm password:</label>
+    <input type="password" name="password2" id="password2" />
+  </p>
+  <button type="submit">Create account</button>
+</form>
+

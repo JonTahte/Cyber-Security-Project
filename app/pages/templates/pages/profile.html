@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load humanize %}
+<html>
+<body>
+{% if not user.is_authenticated %}
+<a href="/"> Home </a> | <a href="/login"> Login </a> | <a href="/register"> register </a>
+{% else %}
+<a href="/"> Home </a>
+{% endif %}
+<hr>
+  {% if comments %}
+  <p><b>{{target.username}}</b> has posted {{comments | length}} comments </p>
+  <h1>Comments of user: {{target.username}}</h1>
+  {% endif %}
+  {% if comments %}
+        <ul style="list-style-type: none;">
+		{% for c in comments %}
+
+		<li style="margin-bottom: 18px;">
+		<div style="text-decoration: underline;"><b>{{c.owner}}</b> <small>({{c.pub_time|naturaltime}})</small>:</div>
+          <div style="margin-top: 3px;">{{c.comment|linebreaksbr}}</div>
+		</li>
+
+		{% endfor %}
+      </ul>
+  {% else %}
+    <b>No comments</b>
+    <br>
+  {% endif %}
+</body>
+</html>
