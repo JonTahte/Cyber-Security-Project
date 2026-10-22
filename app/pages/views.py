@@ -22,15 +22,13 @@ def homePageView(request):
         comments = None
     return render(request, 'pages/index.html', {'comments' : comments})
 
-# @login_required
-# def add(request):
-#     if request.method == 'POST':
-#         comment = request.POST.get('comment', '').strip()
+
 @login_required
+# # delete next row
 @csrf_exempt
 def add(request):
-    if request.method in ['POST', 'GET']:
-        comment = request.GET.get('comment', '').strip() or request.POST.get('comment', '').strip()
+    if request.method == 'POST':
+        comment = request.POST.get('comment', '').strip()
         if comment:
             Comment.objects.create(owner=request.user, comment=comment)
     return redirect('/')
