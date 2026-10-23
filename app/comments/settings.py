@@ -54,8 +54,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'comments.urls'
 
 # #Default django session engine
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-# SESSION_ENGINE = 'comments.simplesession'
+# SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_ENGINE = 'comments.simplesession'
 
 TEMPLATES = [
     {
